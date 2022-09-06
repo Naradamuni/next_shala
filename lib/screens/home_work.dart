@@ -5,6 +5,7 @@ import 'package:base_http/base_http.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:intl/intl.dart';
 import 'package:next_shala/config/routing_arg.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:android_path_provider/android_path_provider.dart';
@@ -18,6 +19,7 @@ class HomeWorkPage extends StatefulWidget {
 }
 
 class _HomeWorkPageState extends State<HomeWorkPage> {
+  DateFormat dateFormat = DateFormat('dd/mm/yyyy hh:mm:ss a');
   List homeWorks = [];
   bool isLoading = true;
   String? error;
@@ -160,17 +162,19 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
       child: Card(
         margin: const EdgeInsets.all(10),
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Wrap(
             spacing: 30,
             runSpacing: 20,
             children: [
               info(title: "Sl. No", desc: (index + 1).toString()),
               info(
-                  title: "Date",
-                  desc: homeWorks[0]['HomeWorkData'][index]['HomeWorkDate']),
+                title: "Date",
+                desc: DateFormat('dd-MM-yyyy').format(dateFormat.parse(
+                    homeWorks[0]['HomeWorkData'][index]['HomeWorkDate'])),
+              ),
               info(
-                  title: "Sl. No",
+                  title: "Home Work",
                   desc: homeWorks[0]['HomeWorkData'][index]['HomeWorkTittle']),
               GestureDetector(
                 onTap: () async {
@@ -191,7 +195,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                 },
                 child: info(
                     title: "Download File",
-                    desc: homeWorks[0]['HomeWorkData'][index]['HomeWorkFile'],
+                    desc: "Click here to download",
                     descColor: Colors.blue),
               )
             ],

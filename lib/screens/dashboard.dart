@@ -86,8 +86,8 @@ class _DashboardPageState extends State<DashboardPage> {
             title: const Text('View Events'),
             onTap: () {
               Navigator.pop(context);
-              // Update the state of the app.
-              // ...
+              Navigator.pushNamed(context, '/events',
+                  arguments: PageRoutingArguments(studentId: studentId));
             },
           ),
           ListTile(

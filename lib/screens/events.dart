@@ -1,6 +1,7 @@
 import 'package:base_http/base_http.dart';
 import 'package:flutter/material.dart';
 import 'package:next_shala/components/carousel.dart';
+import 'package:next_shala/config/routing_arg.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({
@@ -22,13 +23,16 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   loadData() async {
-    final response = await networkClient.post(
-      '/login.svc/geteventdetails',
-    );
+    PageRoutingArguments args =
+        ModalRoute.of(context)!.settings.arguments as PageRoutingArguments;
+
+    final response = await networkClient
+        .post('/login.svc/geteventdetails', data: {"stud_id": args.studentId});
     if (response.data['event_data_detailsResult']['Status'] == 'Success') {
       setState(() {
         isLoading = false;
-        eventsData = response.data['event_data_detailsResult']['EventInfo'];
+        eventsData = response.data['event_data_detailsResult']['SectionInfo'][0]
+            ['EventInfo'];
       });
     } else {
       setState(() {
@@ -82,8 +86,7 @@ class _EventsPageState extends State<EventsPage> {
                   images: eventsData[index]['EventImages'],
                   onClick: (int i) {},
                 ),
-              // if (eventsData[index]['EventImages'].isNotEmpty)
-              //   Image.network(eventsData[index]['EventImages'].first),
+
               info(
                   title: "Details",
                   desc: eventsData[index]['EventDesc'],
@@ -94,28 +97,6 @@ class _EventsPageState extends State<EventsPage> {
       ),
     );
   }
-
-  // DataRow buildAttendenceInfo(int index) {
-  //   return DataRow(cells: [
-  //     DataCell(
-  //       Text((index + 1).toString()),
-  //     ),
-  //     DataCell(
-  //       Text(eventsData[index]['EventDate']),
-  //     ),
-  //     DataCell(
-  //       Text(eventsData[index]['EventName']),
-  //     ),
-  //     DataCell(
-  //       Text(eventsData[index]['EventDesc']),
-  //     ),
-  //     DataCell(
-  //       eventsData[index]['EventImages'].isEmpty
-  //           ? Container()
-  //           : Image.network(eventsData[index]['EventImages'].first),
-  //     ),
-  //   ]);
-  // }
 
   @override
   Widget build(BuildContext context) {
