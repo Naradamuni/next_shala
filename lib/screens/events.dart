@@ -1,5 +1,6 @@
 import 'package:base_http/base_http.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:next_shala/components/carousel.dart';
 import 'package:next_shala/config/routing_arg.dart';
 
@@ -13,6 +14,7 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
+  DateFormat dateFormat = DateFormat('dd/mm/yyyy hh:mm:ss a');
   bool isLoading = true;
   late dynamic eventsData;
   String? error;
@@ -76,7 +78,10 @@ class _EventsPageState extends State<EventsPage> {
             runSpacing: 20,
             children: [
               info(title: "Sl. No", desc: (index + 1).toString()),
-              info(title: "Date", desc: eventsData[index]['EventDate']),
+              info(
+                  title: "Date",
+                  desc: DateFormat('dd-MM-yyyy').format(
+                      dateFormat.parse(eventsData[index]['EventDate']))),
               info(title: "Name", desc: eventsData[index]['EventName']),
 
               /// Image
