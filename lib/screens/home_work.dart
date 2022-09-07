@@ -19,7 +19,6 @@ class HomeWorkPage extends StatefulWidget {
 }
 
 class _HomeWorkPageState extends State<HomeWorkPage> {
-  DateFormat dateFormat = DateFormat('dd/mm/yyyy hh:mm:ss a');
   List homeWorks = [];
   bool isLoading = true;
   String? error;
@@ -170,34 +169,67 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
               info(title: "Sl. No", desc: (index + 1).toString()),
               info(
                 title: "Date",
-                desc: DateFormat('dd-MM-yyyy').format(dateFormat.parse(
-                    homeWorks[0]['HomeWorkData'][index]['HomeWorkDate'])),
+                desc: homeWorks[index]['HomeWorkData'][0]['HomeWorkDate']
+                    .split(" ")[0],
               ),
               info(
                   title: "Home Work",
-                  desc: homeWorks[0]['HomeWorkData'][index]['HomeWorkTittle']),
-              GestureDetector(
-                onTap: () async {
-                  final taskId = await FlutterDownloader.enqueue(
-                    url:
-                        '${homeWorks[0]['HomeWorkData'][index]['HomeWorkFile']}',
+                  desc: homeWorks[index]['HomeWorkData'][0]['HomeWorkTittle']),
+              if (homeWorks[index]['HomeWorkData'][0]['HomeWorkFile'] != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Download File",
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                        onTap: () async {
+                          final taskId = await FlutterDownloader.enqueue(
+                            url:
+                                '${homeWorks[index]['HomeWorkData'][0]['HomeWorkFile']}',
 
-                    savedDir: _localPath,
-                    saveInPublicStorage: true,
-                    showNotification:
-                        true, // show download progress in status bar (for Android)
-                    openFileFromNotification:
-                        true, // click on notification to open downloaded file (for Android)
-                  ).catchError((onError) {
-                    print(onError);
-                  });
-                  print(taskId);
-                },
-                child: info(
-                    title: "Download File",
-                    desc: "Click here to download",
-                    descColor: Colors.blue),
-              )
+                            savedDir: _localPath,
+                            saveInPublicStorage: true,
+                            showNotification:
+                                true, // show download progress in status bar (for Android)
+                            openFileFromNotification:
+                                true, // click on notification to open downloaded file (for Android)
+                          ).catchError((onError) {
+                            print(onError);
+                          });
+                        },
+                        child: const Text(
+                          "Click here to download",
+                          style: TextStyle(color: Colors.blue, fontSize: 16),
+                        )),
+                  ],
+                )
+              // GestureDetector(
+              //   onTap: () async {
+              //     final taskId = await FlutterDownloader.enqueue(
+              //       url:
+              //           '${homeWorks[index]['HomeWorkData'][0]['HomeWorkFile']}',
+
+              //       savedDir: _localPath,
+              //       saveInPublicStorage: true,
+              //       showNotification:
+              //           true, // show download progress in status bar (for Android)
+              //       openFileFromNotification:
+              //           true, // click on notification to open downloaded file (for Android)
+              //     ).catchError((onError) {
+              //       print(onError);
+              //     });
+              //     print(taskId);
+              //   },
+              //   child: info(
+              //       title: "Download File",
+              //       desc: "Click here to download",
+              //       descColor: Colors.blue),
+              // )
             ],
           ),
         ),
@@ -238,7 +270,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
             )
           : SingleChildScrollView(
               child: Column(
-                children: List.generate(homeWorks[0]['HomeWorkData'].length,
+                children: List.generate(homeWorks[0].length,
                     (index) => buildStudentInfoCard(index)).toList(),
               ),
             ),
