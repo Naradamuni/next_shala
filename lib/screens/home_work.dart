@@ -5,8 +5,10 @@ import 'package:base_http/base_http.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:next_shala/config/routing_arg.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:android_path_provider/android_path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -188,17 +190,38 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                     ),
                     GestureDetector(
                         onTap: () async {
-                          final taskId = await FlutterDownloader.enqueue(
-                            url:
-                                '${homeWorks[index]['HomeWorkData'][0]['HomeWorkFile']}',
+                          var result = await GallerySaver.saveImage(
+                                  homeWorks[index]['HomeWorkData'][0]
+                                      ['HomeWorkFile'])
+                              .then((value) {
+                            print(value);
+                          }).catchError((onError) {
+                            print(onError);
+                          });
+                          int pathindex = homeWorks[index]['HomeWorkData'][0]
+                                  ['HomeWorkFile']
+                              .lastIndexOf('/');
 
-                            savedDir: _localPath,
-                            saveInPublicStorage: true,
-                            showNotification:
-                                true, // show download progress in status bar (for Android)
-                            openFileFromNotification:
-                                true, // click on notification to open downloaded file (for Android)
-                          ).catchError((onError) {
+                          String path = _localPath +
+                              homeWorks[index]['HomeWorkData'][0]
+                                      ['HomeWorkFile']
+                                  .substring(pathindex);
+                          print(result);
+                          // final taskId = await FlutterDownloader.enqueue(
+                          //   url:
+                          //       '${homeWorks[index]['HomeWorkData'][0]['HomeWorkFile']}',
+
+                          //   savedDir: _localPath,
+                          //   saveInPublicStorage: true,
+                          //   showNotification:
+                          //       true, // show download progress in status bar (for Android)
+                          //   openFileFromNotification:
+                          //       true, // click on notification to open downloaded file (for Android)
+                          // ).catchError((onError) {
+                          //   print(onError);
+                          // });
+                          // if(taskId != null){
+                          await OpenFile.open(path).catchError((onError) {
                             print(onError);
                           });
                         },

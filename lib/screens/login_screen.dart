@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 100,
                       ),
                       Container(
-                          width: 210,
+                          width: 200,
                           padding: const EdgeInsets.only(left: 10),
                           child: const Text(
                             "JSSSMCS Hubli",
