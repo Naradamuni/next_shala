@@ -270,7 +270,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
             )
           : SingleChildScrollView(
               child: Column(
-                children: List.generate(homeWorks[0].length,
+                children: List.generate(homeWorks.length,
                     (index) => buildStudentInfoCard(index)).toList(),
               ),
             ),
