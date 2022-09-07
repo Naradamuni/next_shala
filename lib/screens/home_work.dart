@@ -273,10 +273,13 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
       });
     } else {
       setState(() {
-        error = response.data['attendance_detailsResult']['Message'];
+        error = response.data['homework_detailsResult']['Message'];
         isLoading = false;
       });
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -291,12 +294,19 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : SingleChildScrollView(
-              child: Column(
-                children: List.generate(homeWorks.length,
-                    (index) => buildStudentInfoCard(index)).toList(),
-              ),
-            ),
+          : homeWorks.isEmpty
+              ? Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    child: const Text("No Data found"),
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: List.generate(homeWorks.length,
+                        (index) => buildStudentInfoCard(index)).toList(),
+                  ),
+                ),
     );
   }
 }

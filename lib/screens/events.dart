@@ -14,7 +14,7 @@ class EventsPage extends StatefulWidget {
 
 class _EventsPageState extends State<EventsPage> {
   bool isLoading = true;
-  late dynamic eventsData;
+  List eventsData = [];
   String? error;
   @override
   void initState() {
@@ -118,41 +118,48 @@ class _EventsPageState extends State<EventsPage> {
                           const EdgeInsets.only(top: 100, left: 10, right: 10),
                       child: Text(error!)),
                 )
-              : SingleChildScrollView(
-                  child: Column(
-                    children: List.generate(
-                        eventsData.length, (index) => buildEventCard(index)),
-                  ),
-                  // scrollDirection: Axis.vertical,
-                  // child: SingleChildScrollView(
-                  //     scrollDirection: Axis.horizontal,
-                  //     child: Container(
-                  //       margin: const EdgeInsets.only(top: 10),
-                  //       child: (eventsData == null)
-                  //           ? const Text("No data found")
-                  //           : Column(
-                  //               children: [
-                  //                 const SizedBox(
-                  //                   height: 20,
-                  //                 ),
-                  //                 DataTable(
-                  //                   columns: const [
-                  //                     DataColumn(label: Text("Sl")),
-                  //                     DataColumn(label: Text("Date")),
-                  //                     DataColumn(label: Text("Name")),
-                  //                     DataColumn(label: Text("Description")),
-                  //                     DataColumn(label: Text("Image")),
-                  //                   ],
-                  //                   rows: List.generate(
-                  //                           eventsData.length,
-                  //                           (index) =>
-                  //                               buildAttendenceInfo(index))
-                  //                       .toList(),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //     )),
-                ),
+              : eventsData.isEmpty
+                  ? Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        child: const Text("No Data found"),
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: List.generate(eventsData.length,
+                            (index) => buildEventCard(index)),
+                      ),
+                      // scrollDirection: Axis.vertical,
+                      // child: SingleChildScrollView(
+                      //     scrollDirection: Axis.horizontal,
+                      //     child: Container(
+                      //       margin: const EdgeInsets.only(top: 10),
+                      //       child: (eventsData == null)
+                      //           ? const Text("No data found")
+                      //           : Column(
+                      //               children: [
+                      //                 const SizedBox(
+                      //                   height: 20,
+                      //                 ),
+                      //                 DataTable(
+                      //                   columns: const [
+                      //                     DataColumn(label: Text("Sl")),
+                      //                     DataColumn(label: Text("Date")),
+                      //                     DataColumn(label: Text("Name")),
+                      //                     DataColumn(label: Text("Description")),
+                      //                     DataColumn(label: Text("Image")),
+                      //                   ],
+                      //                   rows: List.generate(
+                      //                           eventsData.length,
+                      //                           (index) =>
+                      //                               buildAttendenceInfo(index))
+                      //                       .toList(),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //     )),
+                    ),
     );
   }
 }

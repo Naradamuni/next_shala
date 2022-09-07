@@ -13,7 +13,7 @@ class AttendencePage extends StatefulWidget {
 
 class _AttendencePageState extends State<AttendencePage> {
   bool isLoading = true;
-  late dynamic attendeceData;
+  List attendeceData = [];
   String? error;
   @override
   void initState() {
@@ -65,49 +65,45 @@ class _AttendencePageState extends State<AttendencePage> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : error != null
+          : attendeceData.isEmpty
               ? Center(
                   child: Container(
                       padding:
-                          const EdgeInsets.only(top: 100, left: 10, right: 10),
-                      child: Text(error!)),
+                          const EdgeInsets.only(top: 10, left: 10, right: 10),
+                      child: const Text("No data found")),
                 )
               : SingleChildScrollView(
                   child: Container(
                     margin: const EdgeInsets.only(top: 10),
-                    child: (attendeceData == null)
-                        ? const Text("No data found")
-                        : Column(
-                            children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Academic Year: ${attendeceData[0]['AcademicYear']}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              DataTable(
-                                columns: const [
-                                  DataColumn(label: Text("Sl")),
-                                  DataColumn(label: Text("Date")),
-                                  DataColumn(label: Text("Status"))
-                                ],
-                                rows: List.generate(attendeceData.length,
-                                        (index) => buildAttendenceInfo(index))
-                                    .toList(),
-                              ),
-                            ],
-                          ),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Academic Year: ${attendeceData[0]['AcademicYear']}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        DataTable(
+                          columns: const [
+                            DataColumn(label: Text("Sl")),
+                            DataColumn(label: Text("Date")),
+                            DataColumn(label: Text("Status"))
+                          ],
+                          rows: List.generate(attendeceData.length,
+                              (index) => buildAttendenceInfo(index)).toList(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
     );
