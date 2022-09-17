@@ -27,6 +27,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
   String? error;
   late bool _permissionReady;
   late String _localPath;
+  var dateFormat = DateFormat('M/D/yyyy hh:mm:ss a');
   @override
   void initState() {
     super.initState();
@@ -171,10 +172,12 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
             children: [
               info(title: "Sl. No", desc: (index + 1).toString()),
               info(
-                title: "Date",
-                desc: homeWorks[index]['HomeWorkData'][0]['HomeWorkDate']
-                    .split(" ")[0],
-              ),
+                  title: "Date",
+                  desc: DateFormat('dd MMM yyyy').format(dateFormat.parse(
+                      homeWorks[index]['HomeWorkData'][0]['HomeWorkDate']))
+                  // desc: homeWorks[index]['HomeWorkData'][0]['HomeWorkDate']
+                  //     .split(" ")[0],
+                  ),
               info(
                   title: "Home Work",
                   desc: homeWorks[index]['HomeWorkData'][0]['HomeWorkTittle']),

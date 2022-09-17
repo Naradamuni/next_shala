@@ -17,13 +17,18 @@ import 'package:next_shala/screens/home_work.dart';
 import 'package:next_shala/screens/login_screen.dart';
 import 'package:next_shala/screens/messages.dart';
 import 'package:next_shala/screens/profile.dart';
+import 'package:next_shala/screens/time-table.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'firebase_options.dart';
 
 ///main function to run app
 void main() async {
   networkConfig.baseUrl = environment['baseUrl']!;
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FlutterDownloader.initialize(
       debug:
           true, // optional: set to false to disable printing logs to console (default: true)
@@ -94,6 +99,7 @@ class _MyApp extends State<MyApp> with WidgetsBindingObserver {
                 '/home_work': (context) => const HomeWorkPage(),
                 '/messages': (context) => const MessagesPage(),
                 '/events': (context) => const EventsPage(),
+                '/time_table': (context) => const TimeTablePage(),
               },
             )));
   }

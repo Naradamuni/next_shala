@@ -91,6 +91,14 @@ class _DashboardPageState extends State<DashboardPage> {
             },
           ),
           ListTile(
+            title: const Text('Time table'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/time_table',
+                  arguments: PageRoutingArguments(studentId: studentId));
+            },
+          ),
+          ListTile(
             title: const Text('Logout'),
             onTap: () {
               Navigator.pop(context);

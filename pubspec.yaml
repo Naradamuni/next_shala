@@ -49,6 +49,8 @@ dependencies:
   gallery_saver: ^2.3.2
   image_downloader: ^0.31.0
   open_file: ^3.2.1
+  firebase_core: ^1.21.1
+  firebase_messaging: ^13.0.2
   base_http:
     path: packages/base_http
   authentication_repository:
