@@ -86,6 +86,7 @@ class _EventsPageState extends State<EventsPage> {
                   eventsData[index]['EventImages'].isNotEmpty)
                 ImageCarousel(
                   images: eventsData[index]['EventImages'],
+                  objectKey: "EventImage",
                   onClick: (int i) {},
                 ),
 

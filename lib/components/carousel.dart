@@ -9,6 +9,7 @@ class ImageCarousel extends StatefulWidget {
     Key? key,
     required this.onClick,
     required this.images,
+    required this.objectKey,
   }) : super(key: key);
 
   ///The list of images
@@ -16,6 +17,7 @@ class ImageCarousel extends StatefulWidget {
 
   ///On click callback
   final Function(int) onClick;
+  final String objectKey;
 
   ///The statee
   @override
@@ -58,7 +60,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: Image.network(
-                              widget.images[index]['EventImage'],
+                              widget.images[index][widget.objectKey],
                               fit: BoxFit.cover,
                             ))));
               },
