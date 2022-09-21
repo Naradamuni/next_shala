@@ -29,6 +29,7 @@ class AuthView extends StatelessWidget {
         switch (state.status) {
           case AuthenticationStatus.authenticated:
             if (state.user.userId != '') {
+              context.read<AuthenticationBloc>().add(RegisterFCMEvent());
               WidgetsBinding.instance.addPostFrameCallback(
                   (_) => Navigator.pushReplacementNamed(context, '/home'));
             }

@@ -6,6 +6,7 @@ class AuthenticationState extends Equatable {
   const AuthenticationState(
       {this.status = AuthenticationStatus.unknown,
       this.user = const User.empty(),
+      this.fcmToken = '',
       this.error = '',
       this.isLoading = false});
 
@@ -22,6 +23,7 @@ class AuthenticationState extends Equatable {
   AuthenticationState.fromJson(Map<String, dynamic> map)
       : user = map['user'],
         status = map['status'],
+        fcmToken = map['fcmToken'],
         error = map['error'],
         isLoading = map['isLoading'];
 
@@ -44,15 +46,18 @@ class AuthenticationState extends Equatable {
   ///The flahg to indicate loading
   final bool isLoading;
 
+  final String fcmToken;
+
   ///return props, an Equatable @override
   @override
-  List<Object> get props => [status, user, error, isLoading];
+  List<Object> get props => [status, user, error, isLoading, fcmToken];
 
   ///Creates a [Map<String, dynamic>] from an [AuthenticationState] instance
   Map<String, dynamic> toJson() {
     return {
       'user': user.toJson(),
       'status': status.toString(),
+      'fcmToken': fcmToken,
       'error': error,
       'isLoading': isLoading,
     };
@@ -64,11 +69,13 @@ class AuthenticationState extends Equatable {
     AuthenticationStatus? status,
     String? error,
     bool? isLoading,
+    String? fcmToken,
   }) {
     return AuthenticationState(
         user: user ?? this.user,
         status: status ?? this.status,
         error: error ?? this.error,
+        fcmToken: fcmToken ?? this.fcmToken,
         isLoading: isLoading ?? this.isLoading);
   }
 }

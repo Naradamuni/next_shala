@@ -43,5 +43,7 @@ class UpdateUserEvent extends AuthenticationEvent {
   List<Object> get props => [user];
 }
 
+class RegisterFCMEvent extends AuthenticationEvent {}
+
 ///A class that ecapsulates a event when log out iis requested by the usser
 class AuthenticationLogoutRequested extends AuthenticationEvent {}

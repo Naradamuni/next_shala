@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:base_http/base_http.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'authentication_event.dart';
@@ -87,6 +89,7 @@ class AuthenticationBloc
     on<AuthenticationStatusChanged>(_onAuthenticationStatusChanged);
     on<UpdateUserEvent>(_onUpdateUserEvent);
     on<SigninEvent>(_onSigninEvent);
+    on<RegisterFCMEvent>(_onRegisterFCMEvent);
     on<AuthenticationLogoutRequested>(_onAuthenticationLogoutRequested);
     authenticationStatusSubscription = authenticationRepository.status
         .listen((result) => add(AuthenticationStatusChanged(result)));
@@ -126,6 +129,7 @@ class AuthenticationBloc
     return AuthenticationState(
         isLoading: json['isLoading'],
         user: User.fromJson(json['user']),
+        fcmToken: json['fcmToken'],
         status: AuthenticationStatus.values
             .firstWhere((e) => e.toString() == json['status']));
   }
@@ -137,9 +141,40 @@ class AuthenticationBloc
   Map<String, dynamic>? toJson(AuthenticationState state) {
     return {
       'user': state.user.toJson(),
+      'fcmToken': state.fcmToken,
       'status': state.status.toString(),
       'isLoading': state.isLoading
     };
+  }
+
+  _onRegisterFCMEvent(
+      RegisterFCMEvent event, Emitter<AuthenticationState> emit) async {
+    FirebaseMessaging.instance.getToken().then((token) async {
+      if (state.fcmToken == '' || state.fcmToken != token) {
+        emit(state.copyWith(fcmToken: token));
+        final response = await networkClient.post('/login.svc/postdevicedt',
+            data: {
+              'stud_id': state.user.studId,
+              'postdevicedt': token
+            }).catchError((onError) {
+          print(onError);
+        });
+      }
+    });
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    if (initialMessage != null) {
+      if (initialMessage.data['url'] != null) {
+        // add(DidGetDeeplinkEvent(path: initialMessage.data['url']));
+      }
+    }
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.data['url'] != null) {
+        // add(DidGetDeeplinkEvent(path: message.data['url']));
+      }
+    });
   }
 
   _onSigninEvent(SigninEvent event, Emitter<AuthenticationState> emit) {

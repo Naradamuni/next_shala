@@ -20,6 +20,7 @@ class LaunchView extends StatelessWidget {
       listener: (context, state) {
         switch (state.status) {
           case AuthenticationStatus.authenticated:
+            context.read<AuthenticationBloc>().add(RegisterFCMEvent());
             Navigator.pushReplacementNamed(context, '/home');
             break;
           case AuthenticationStatus.failure:
