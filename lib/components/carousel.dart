@@ -61,7 +61,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
                             borderRadius: BorderRadius.circular(10.0),
                             child: Image.network(
                               widget.images[index][widget.objectKey],
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fitHeight,
                             ))));
               },
               length: widget.images.length),

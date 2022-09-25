@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:next_shala/components/carousel.dart';
 import 'package:next_shala/config/routing_arg.dart';
+import 'package:next_shala/screens/image_full_view.dart';
+import 'package:next_shala/utils/transparent_screen_overlay.dart';
 
 class TimeTablePage extends StatefulWidget {
   const TimeTablePage({
@@ -91,7 +93,17 @@ class _TimeTablePageState extends State<TimeTablePage> {
                 ImageCarousel(
                   images: data[index]['TimeTableImages'],
                   objectKey: "ImageFile",
-                  onClick: (int i) {},
+                  onClick: (int i) {
+                    Navigator.push(
+                        context,
+                        TransparentFullScreenOverlay(
+                            bgColor: Colors.black.withOpacity(0.98),
+                            child: PhotoViewerPage(
+                              images: data[index]['TimeTableImages'],
+                              objectKey: "ImageFile",
+                              currentImageIndex: i,
+                            )));
+                  },
                 ),
               info(title: "Description", desc: data[index]['Description']),
             ],

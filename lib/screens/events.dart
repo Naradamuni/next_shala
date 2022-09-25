@@ -2,6 +2,8 @@ import 'package:base_http/base_http.dart';
 import 'package:flutter/material.dart';
 import 'package:next_shala/components/carousel.dart';
 import 'package:next_shala/config/routing_arg.dart';
+import 'package:next_shala/screens/image_full_view.dart';
+import 'package:next_shala/utils/transparent_screen_overlay.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({
@@ -87,7 +89,17 @@ class _EventsPageState extends State<EventsPage> {
                 ImageCarousel(
                   images: eventsData[index]['EventImages'],
                   objectKey: "EventImage",
-                  onClick: (int i) {},
+                  onClick: (int i) {
+                    Navigator.push(
+                        context,
+                        TransparentFullScreenOverlay(
+                            bgColor: Colors.black.withOpacity(0.98),
+                            child: PhotoViewerPage(
+                              images: eventsData[index]['EventImages'],
+                              objectKey: "EventImage",
+                              currentImageIndex: i,
+                            )));
+                  },
                 ),
 
               info(
