@@ -155,7 +155,7 @@ class AuthenticationBloc
         final response = await networkClient.post('/login.svc/postdevicedt',
             data: {
               'stud_id': state.user.studId,
-              'postdevicedt': token
+              'device_token': token
             }).catchError((onError) {
           print(onError);
         });
