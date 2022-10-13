@@ -51,6 +51,8 @@ dependencies:
   open_file: ^3.2.1
   firebase_core: ^1.21.1
   firebase_messaging: ^13.0.2
+  rxdart: ^0.27.1
+  get: ^4.6.5
   base_http:
     path: packages/base_http
   authentication_repository:

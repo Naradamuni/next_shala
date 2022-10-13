@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:get/get.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:next_shala/config/environment.dart';
+import 'package:next_shala/config/routing_arg.dart';
 import 'package:next_shala/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:next_shala/modules/authentication/view/auth_view.dart';
 import 'package:next_shala/modules/authentication/view/launch_view.dart';
@@ -73,6 +75,7 @@ class _MyApp extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    // listenFirbase(context);
     return MultiRepositoryProvider(
         providers: [
           RepositoryProvider.value(value: AuthenticationRepository()),
@@ -85,7 +88,7 @@ class _MyApp extends State<MyApp> with WidgetsBindingObserver {
                         context.read<AuthenticationRepository>());
               }),
             ],
-            child: MaterialApp(
+            child: GetMaterialApp(
               home: const LaunchView(),
               routes: {
                 '/app': (context) => const AuthView(

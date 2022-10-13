@@ -149,32 +149,19 @@ class AuthenticationBloc
 
   _onRegisterFCMEvent(
       RegisterFCMEvent event, Emitter<AuthenticationState> emit) async {
-    FirebaseMessaging.instance.getToken().then((token) async {
-      if (state.fcmToken == '' || state.fcmToken != token) {
-        emit(state.copyWith(fcmToken: token));
-        final response = await networkClient.post('/login.svc/postdevicedt',
-            data: {
-              'stud_id': state.user.studId,
-              'device_token': token
-            }).catchError((onError) {
-          print(onError);
-        });
-      }
-    });
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-
-    if (initialMessage != null) {
-      if (initialMessage.data['url'] != null) {
-        // add(DidGetDeeplinkEvent(path: initialMessage.data['url']));
-      }
+    String? token = await FirebaseMessaging.instance.getToken();
+    //  .then((token) async {
+    if (state.fcmToken == '' || state.fcmToken != token) {
+      emit(state.copyWith(fcmToken: token));
+      final response = await networkClient.post('/login.svc/postdevicedt',
+          data: {
+            'stud_id': state.user.studId,
+            'device_token': token
+          }).catchError((onError) {
+        print(onError);
+      });
     }
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      if (message.data['url'] != null) {
-        // add(DidGetDeeplinkEvent(path: message.data['url']));
-      }
-    });
+    // });
   }
 
   _onSigninEvent(SigninEvent event, Emitter<AuthenticationState> emit) {

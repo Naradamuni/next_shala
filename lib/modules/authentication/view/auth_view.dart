@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:next_shala/modules/authentication/bloc/authentication_bloc.dart';
+import 'package:next_shala/utils/fcm.dart';
 
 ///A widget that shows a child page (login/signup) and routes based on changes on auth/state
 ///Uses[AuthenticationBloc] & [AuthenticationState].
@@ -30,6 +33,8 @@ class AuthView extends StatelessWidget {
           case AuthenticationStatus.authenticated:
             if (state.user.userId != '') {
               context.read<AuthenticationBloc>().add(RegisterFCMEvent());
+              WidgetsBinding.instance
+                  .addPostFrameCallback((_) => FCM().init(context));
               WidgetsBinding.instance.addPostFrameCallback(
                   (_) => Navigator.pushReplacementNamed(context, '/home'));
             }

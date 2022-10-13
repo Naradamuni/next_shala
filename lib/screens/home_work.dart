@@ -4,8 +4,7 @@ import 'dart:ui';
 import 'package:base_http/base_http.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:gallery_saver/gallery_saver.dart';
+// import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
 import 'package:next_shala/config/routing_arg.dart';
@@ -33,7 +32,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => getData());
-    FlutterDownloader.registerCallback(downloadCallback, step: 1);
+    // FlutterDownloader.registerCallback(downloadCallback, step: 1);
     _permissionReady = false;
 
     _prepare();
@@ -47,20 +46,20 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
     }
   }
 
-  @pragma('vm:entry-point')
-  static void downloadCallback(
-    String id,
-    DownloadTaskStatus status,
-    int progress,
-  ) {
-    print(
-      'Callback on background isolate: '
-      'task ($id) is in status ($status) and process ($progress)',
-    );
+  // @pragma('vm:entry-point')
+  // static void downloadCallback(
+  //   String id,
+  //   DownloadTaskStatus status,
+  //   int progress,
+  // ) {
+  //   print(
+  //     'Callback on background isolate: '
+  //     'task ($id) is in status ($status) and process ($progress)',
+  //   );
 
-    IsolateNameServer.lookupPortByName('downloader_send_port')
-        ?.send([id, status, progress]);
-  }
+  //   IsolateNameServer.lookupPortByName('downloader_send_port')
+  //       ?.send([id, status, progress]);
+  // }
 
   @override
   void dispose() {
@@ -172,12 +171,12 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
             children: [
               info(title: "Sl. No", desc: (index + 1).toString()),
               info(
-                  title: "Date",
-                  desc: DateFormat('dd MMM yyyy').format(dateFormat.parse(
-                      homeWorks[index]['HomeWorkData'][0]['HomeWorkDate']))
-                  // desc: homeWorks[index]['HomeWorkData'][0]['HomeWorkDate']
-                  //     .split(" ")[0],
-                  ),
+                title: "Date",
+                // desc:
+                // DateFormat('dd MMM yyyy').format(dateFormat.parse(
+                //     homeWorks[index]['HomeWorkData'][0]['HomeWorkDate']))
+                desc: homeWorks[index]['HomeWorkData'][0]['HomeWorkDate'],
+              ),
               info(
                   title: "Home Work",
                   desc: homeWorks[index]['HomeWorkData'][0]['HomeWorkTittle']),

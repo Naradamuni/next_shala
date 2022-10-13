@@ -78,9 +78,7 @@ class _EventsPageState extends State<EventsPage> {
             runSpacing: 20,
             children: [
               info(title: "Sl. No", desc: (index + 1).toString()),
-              info(
-                  title: "Date",
-                  desc: eventsData[index]['EventDate'].split(" ")[0]),
+              info(title: "Date", desc: eventsData[index]['EventDate']),
               info(title: "Name", desc: eventsData[index]['EventName']),
 
               /// Image

@@ -43,6 +43,17 @@ class UpdateUserEvent extends AuthenticationEvent {
   List<Object> get props => [user];
 }
 
+class DidGetDeeplinkEvent extends AuthenticationEvent {
+  final String path;
+  final String id;
+
+  const DidGetDeeplinkEvent({required this.path, required this.id});
+
+  ///Equatable override to get props
+  @override
+  List<Object> get props => [path, id];
+}
+
 class RegisterFCMEvent extends AuthenticationEvent {}
 
 ///A class that ecapsulates a event when log out iis requested by the usser

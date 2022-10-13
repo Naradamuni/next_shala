@@ -54,12 +54,14 @@ class _HomePageState extends State<HomePage> {
     final response = await networkClient
         .post('/login.svc/getstudentdt', data: {"std_id": id});
     if (response.data['get_student_detailsResult']['Status'] == 'Success') {
-      WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
-            students =
-                response.data['get_student_detailsResult']['StudentDetails'];
-            isFirstLoad = false;
-            isLoading = false;
-          }));
+      if (mounted) {
+        setState(() {
+          students =
+              response.data['get_student_detailsResult']['StudentDetails'];
+          isFirstLoad = false;
+          isLoading = false;
+        });
+      }
     } else {
       setState(() {
         error = "Unable to get Student details";
@@ -94,6 +96,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         if (students.isNotEmpty)
                           DataTable(
+                            horizontalMargin: 10,
                             columns: const [
                               DataColumn(
                                   label: Text(
