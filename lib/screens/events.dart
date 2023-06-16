@@ -1,5 +1,6 @@
 import 'package:base_http/base_http.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:next_shala/components/carousel.dart';
 import 'package:next_shala/config/routing_arg.dart';
 import 'package:next_shala/screens/image_full_view.dart';
@@ -67,24 +68,58 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   Widget buildEventCard(int index) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Card(
         margin: const EdgeInsets.all(10),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Wrap(
-            spacing: 30,
-            runSpacing: 20,
-            children: [
-              info(title: "Sl. No", desc: (index + 1).toString()),
-              info(title: "Date", desc: eventsData[index]['EventDate']),
-              info(title: "Name", desc: eventsData[index]['EventName']),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              leading: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: index % 2 == 0
+                      ? Colors.cyan
+                      : Colors.blue.withOpacity(0.9),
+                ),
+                child: Center(
+                  child: Text((index + 1).toString(),
+                      style: GoogleFonts.montserrat(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12)),
+                ),
+              ),
+              title: Text(eventsData[index]['EventDate'],
+                  style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15)),
+              subtitle: Text(eventsData[index]['EventName'],
+                  style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(eventsData[index]['EventDesc'],
+                  style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16)),
+            ),
+            const SizedBox(height: 10),
 
-              /// Image
-              if (eventsData[index]['EventImages'] != null &&
-                  eventsData[index]['EventImages'].isNotEmpty)
-                ImageCarousel(
+            /// Image
+            if (eventsData[index]['EventImages'] != null &&
+                eventsData[index]['EventImages'].isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ImageCarousel(
                   images: eventsData[index]['EventImages'],
                   objectKey: "EventImage",
                   onClick: (int i) {
@@ -99,13 +134,8 @@ class _EventsPageState extends State<EventsPage> {
                             )));
                   },
                 ),
-
-              info(
-                  title: "Details",
-                  desc: eventsData[index]['EventDesc'],
-                  descColor: Colors.blue),
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );
@@ -115,8 +145,32 @@ class _EventsPageState extends State<EventsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 60,
+        automaticallyImplyLeading: true,
+        title: Text("Events",
+            style: GoogleFonts.montserrat(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: 24)),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.blue,
+                  blurRadius: 5,
+                  spreadRadius: 0,
+                  offset: Offset(2, 2)),
+            ],
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: <Color>[
+                  Color(0Xff00AEEF),
+                  Color(0Xff2377B8),
+                ]),
+          ),
+        ),
         centerTitle: true,
-        title: const Text('Events'),
       ),
       body: isLoading
           ? const Center(
@@ -127,13 +181,21 @@ class _EventsPageState extends State<EventsPage> {
                   child: Container(
                       padding:
                           const EdgeInsets.only(top: 100, left: 10, right: 10),
-                      child: Text(error!)),
+                      child: Text(error!,
+                          style: GoogleFonts.montserrat(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16))),
                 )
               : eventsData.isEmpty
                   ? Center(
                       child: Container(
                         padding: const EdgeInsets.all(20),
-                        child: const Text("No Data found"),
+                        child: Text("No Data found",
+                            style: GoogleFonts.montserrat(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16)),
                       ),
                     )
                   : SingleChildScrollView(
@@ -141,35 +203,6 @@ class _EventsPageState extends State<EventsPage> {
                         children: List.generate(eventsData.length,
                             (index) => buildEventCard(index)),
                       ),
-                      // scrollDirection: Axis.vertical,
-                      // child: SingleChildScrollView(
-                      //     scrollDirection: Axis.horizontal,
-                      //     child: Container(
-                      //       margin: const EdgeInsets.only(top: 10),
-                      //       child: (eventsData == null)
-                      //           ? const Text("No data found")
-                      //           : Column(
-                      //               children: [
-                      //                 const SizedBox(
-                      //                   height: 20,
-                      //                 ),
-                      //                 DataTable(
-                      //                   columns: const [
-                      //                     DataColumn(label: Text("Sl")),
-                      //                     DataColumn(label: Text("Date")),
-                      //                     DataColumn(label: Text("Name")),
-                      //                     DataColumn(label: Text("Description")),
-                      //                     DataColumn(label: Text("Image")),
-                      //                   ],
-                      //                   rows: List.generate(
-                      //                           eventsData.length,
-                      //                           (index) =>
-                      //                               buildAttendenceInfo(index))
-                      //                       .toList(),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //     )),
                     ),
     );
   }

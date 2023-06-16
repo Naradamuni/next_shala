@@ -2,9 +2,10 @@
 class PageRoutingArguments {
   /// the consructor
   PageRoutingArguments({
-    required this.studentId,
+    required this.studentId, this.fName,
   });
 
   ///The student model
   final String studentId;
+  final String? fName;
 }

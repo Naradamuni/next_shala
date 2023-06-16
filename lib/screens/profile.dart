@@ -1,5 +1,6 @@
 import 'package:base_http/base_http.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:next_shala/components/base_text_filed.dart';
 import 'package:next_shala/components/titled_input_field.dart';
 import 'package:next_shala/config/routing_arg.dart';
@@ -42,13 +43,34 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    // return
-    // BlocBuilder<AuthenticationBloc, AuthenticationState>(
-    //   builder: (context, state) {
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.9),
       appBar: AppBar(
+        toolbarHeight: 60,
         automaticallyImplyLeading: true,
-        title: const Text("Profile"),
+        title: Text("Profile",
+            style: GoogleFonts.montserrat(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: 24)),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.blue,
+                  blurRadius: 5,
+                  spreadRadius: 0,
+                  offset: Offset(2, 2)),
+            ],
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: <Color>[
+                  Color(0Xff00AEEF),
+                  Color(0Xff2377B8),
+                ]),
+          ),
+        ),
         centerTitle: true,
       ),
       body: isLoading
@@ -64,58 +86,65 @@ class _ProfilePageState extends State<ProfilePage> {
                 )
               : SingleChildScrollView(
                   child: Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
+                    padding:
+                        const EdgeInsets.only(left: 20.0, top: 20, right: 20),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TitledInputFragment(
                           title: "Roll no",
                           inputWidget: BaseTextFieldFragment(
-                            enabled: false,
-                            hintText: myprofile['StudentId'],
-                          ),
+                              enabled: false,
+                              hintText: myprofile['StudentId'],
+                              fillColor:
+                                  const Color(0XFF686868).withOpacity(0.3)),
                         ),
                         TitledInputFragment(
                           title: "Student Name",
                           inputWidget: BaseTextFieldFragment(
-                            enabled: false,
-                            hintText: myprofile['StudName'],
-                          ),
+                              enabled: false,
+                              hintText: myprofile['StudName'],
+                              fillColor:
+                                  const Color(0XFF686868).withOpacity(0.3)),
                         ),
                         TitledInputFragment(
                           title: "Father Name",
                           inputWidget: BaseTextFieldFragment(
-                            enabled: false,
-                            hintText: myprofile['FatherName'],
-                          ),
+                              enabled: false,
+                              hintText: myprofile['FatherName'],
+                              fillColor:
+                                  const Color(0XFF686868).withOpacity(0.3)),
                         ),
                         TitledInputFragment(
                           title: "Mother Name",
                           inputWidget: BaseTextFieldFragment(
-                            enabled: false,
-                            hintText: myprofile['MotherName'],
-                          ),
+                              enabled: false,
+                              hintText: myprofile['MotherName'],
+                              fillColor:
+                                  const Color(0XFF686868).withOpacity(0.3)),
                         ),
                         TitledInputFragment(
                           title: "Phone",
                           inputWidget: BaseTextFieldFragment(
-                            enabled: false,
-                            hintText: myprofile['FatherMobileNo'],
-                          ),
+                              enabled: false,
+                              hintText: myprofile['FatherMobileNo'],
+                              fillColor:
+                                  const Color(0XFF686868).withOpacity(0.3)),
                         ),
                         TitledInputFragment(
                           title: "User name",
+                          textColor: Colors.black,
                           inputWidget: BaseTextFieldFragment(
-                            enabled: false,
-                            hintText: myprofile['UserId'],
-                          ),
+                              enabled: false,
+                              hintText: myprofile['UserId'],
+                              fillColor:
+                                  const Color(0XFF686868).withOpacity(0.3)),
                         )
                       ],
                     ),
                   ),
                 ),
     );
-    //   },
-    // );
   }
 }

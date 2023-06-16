@@ -7,7 +7,6 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:next_shala/config/environment.dart';
-import 'package:next_shala/config/routing_arg.dart';
 import 'package:next_shala/modules/authentication/bloc/authentication_bloc.dart';
 import 'package:next_shala/modules/authentication/view/auth_view.dart';
 import 'package:next_shala/modules/authentication/view/launch_view.dart';
@@ -17,12 +16,13 @@ import 'package:next_shala/screens/events.dart';
 import 'package:next_shala/screens/home_page.dart';
 import 'package:next_shala/screens/home_work.dart';
 import 'package:next_shala/screens/login_screen.dart';
+import 'package:next_shala/screens/mainPage.dart';
 import 'package:next_shala/screens/messages.dart';
 import 'package:next_shala/screens/profile.dart';
 import 'package:next_shala/screens/time-table.dart';
+import 'package:next_shala/screens/timetableshow.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'firebase_options.dart';
 
 ///main function to run app
@@ -96,6 +96,7 @@ class _MyApp extends State<MyApp> with WidgetsBindingObserver {
                     ),
                 '/login': (context) => const LoginScreen(),
                 '/home': (context) => const HomePage(),
+                '/ProfileApp': (context) => const ProfileApp(),
                 '/dashboard': (context) => const DashboardPage(),
                 '/attendence': (context) => const AttendencePage(),
                 '/profile': (context) => const ProfilePage(),
@@ -103,7 +104,9 @@ class _MyApp extends State<MyApp> with WidgetsBindingObserver {
                 '/messages': (context) => const MessagesPage(),
                 '/events': (context) => const EventsPage(),
                 '/time_table': (context) => const TimeTablePage(),
+                '/time_table_week': (context) => WeekdaysScreen(),
               },
+              debugShowCheckedModeBanner: false,
             )));
   }
 }

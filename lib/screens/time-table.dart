@@ -1,5 +1,6 @@
 import 'package:base_http/base_http.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:next_shala/components/carousel.dart';
 import 'package:next_shala/config/routing_arg.dart';
@@ -69,28 +70,58 @@ class _TimeTablePageState extends State<TimeTablePage> {
   }
 
   Widget buildEventCard(int index) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Card(
         margin: const EdgeInsets.all(10),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Wrap(
-            spacing: 30,
-            runSpacing: 20,
-            children: [
-              info(title: "Sl. No", desc: (index + 1).toString()),
-              if (data[index]['Date'].isNotEmpty)
-                info(
-                    title: "Date",
-                    desc: DateFormat('dd MMM yyyy')
-                        .format(dateFormat.parse(data[index]['Date']))),
-              info(title: "Name", desc: data[index]['Name']),
-
-              /// Image
-              if (data[index]['TimeTableImages'] != null &&
-                  data[index]['TimeTableImages'].isNotEmpty)
-                ImageCarousel(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              leading: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: index % 2 == 0
+                      ? Colors.cyan
+                      : Colors.blue.withOpacity(0.9),
+                ),
+                child: Center(
+                  child: Text((index + 1).toString(),
+                      style: GoogleFonts.montserrat(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12)),
+                ),
+              ),
+              title: Text(
+                  DateFormat('dd MMM yyyy')
+                      .format(dateFormat.parse(data[index]['Date'])),
+                  style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15)),
+              subtitle: Text(data[index]['Name'],
+                  style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(data[index]['Description'],
+                  style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16)),
+            ),
+            const SizedBox(height: 10),
+            if (data[index]['TimeTableImages'] != null &&
+                data[index]['TimeTableImages'].isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ImageCarousel(
                   images: data[index]['TimeTableImages'],
                   objectKey: "ImageFile",
                   onClick: (int i) {
@@ -105,9 +136,8 @@ class _TimeTablePageState extends State<TimeTablePage> {
                             )));
                   },
                 ),
-              info(title: "Description", desc: data[index]['Description']),
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );
@@ -117,8 +147,32 @@ class _TimeTablePageState extends State<TimeTablePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 60,
+        automaticallyImplyLeading: true,
+        title: Text("Time Table Portion",
+            style: GoogleFonts.montserrat(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: 24)),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.blue,
+                  blurRadius: 5,
+                  spreadRadius: 0,
+                  offset: Offset(2, 2)),
+            ],
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: <Color>[
+                  Color(0Xff00AEEF),
+                  Color(0Xff2377B8),
+                ]),
+          ),
+        ),
         centerTitle: true,
-        title: const Text('Time table'),
       ),
       body: isLoading
           ? const Center(
@@ -143,35 +197,6 @@ class _TimeTablePageState extends State<TimeTablePage> {
                         children: List.generate(
                             data.length, (index) => buildEventCard(index)),
                       ),
-                      // scrollDirection: Axis.vertical,
-                      // child: SingleChildScrollView(
-                      //     scrollDirection: Axis.horizontal,
-                      //     child: Container(
-                      //       margin: const EdgeInsets.only(top: 10),
-                      //       child: (data == null)
-                      //           ? const Text("No data found")
-                      //           : Column(
-                      //               children: [
-                      //                 const SizedBox(
-                      //                   height: 20,
-                      //                 ),
-                      //                 DataTable(
-                      //                   columns: const [
-                      //                     DataColumn(label: Text("Sl")),
-                      //                     DataColumn(label: Text("Date")),
-                      //                     DataColumn(label: Text("Name")),
-                      //                     DataColumn(label: Text("Description")),
-                      //                     DataColumn(label: Text("Image")),
-                      //                   ],
-                      //                   rows: List.generate(
-                      //                           data.length,
-                      //                           (index) =>
-                      //                               buildAttendenceInfo(index))
-                      //                       .toList(),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //     )),
                     ),
     );
   }

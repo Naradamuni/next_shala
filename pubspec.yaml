@@ -47,7 +47,7 @@ dependencies:
   carousel_slider: ^4.1.1
   intl: ^0.17.0
   gallery_saver: ^2.3.2
-  image_downloader: ^0.31.0
+#  image_downloader: ^0.31.0
   open_file: ^3.2.1
   firebase_core: ^1.21.1
   firebase_messaging: ^13.0.2
@@ -57,6 +57,8 @@ dependencies:
     path: packages/base_http
   authentication_repository:
     path: packages/authentication_repository
+  google_fonts: ^2.1.0
+
 
 dev_dependencies:
   flutter_test:

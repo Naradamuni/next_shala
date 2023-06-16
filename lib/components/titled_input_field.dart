@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// The reuseable compenent to render title and input filed
 class TitledInputFragment extends StatelessWidget {
@@ -24,16 +25,12 @@ class TitledInputFragment extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,
-            style: TextStyle(
-                color: textColor,
-                fontWeight: FontWeight.w500,
-                fontFamily: "Avenir",
-                fontStyle: FontStyle.normal,
-                fontSize: 16.0),
-            textAlign: TextAlign.left),
-        const SizedBox(
-          height: 12,
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, top: 10),
+          child: Text(title,
+              style: GoogleFonts.montserrat(
+                  color: textColor, fontWeight: FontWeight.w700, fontSize: 18),
+              textAlign: TextAlign.left),
         ),
         inputWidget,
       ],

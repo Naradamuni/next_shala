@@ -145,7 +145,9 @@ class BaseTextFieldFragment extends StatelessWidget {
                   fontFamily: "Avenir",
                   fontStyle: FontStyle.normal,
                   fontSize: 16.0),
-              border: InputBorder.none,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: borderColor),
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
