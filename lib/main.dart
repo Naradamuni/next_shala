@@ -15,6 +15,7 @@ import 'package:next_shala/screens/dashboard.dart';
 import 'package:next_shala/screens/events.dart';
 import 'package:next_shala/screens/home_page.dart';
 import 'package:next_shala/screens/home_work.dart';
+import 'package:next_shala/screens/lesson.dart';
 import 'package:next_shala/screens/login_screen.dart';
 import 'package:next_shala/screens/main_page.dart';
 import 'package:next_shala/screens/messages.dart';
@@ -105,6 +106,7 @@ class _MyApp extends State<MyApp> with WidgetsBindingObserver {
                 '/events': (context) => const EventsPage(),
                 '/time_table': (context) => const TimeTablePage(),
                 '/time_table_week': (context) => const WeekdaysScreen(),
+                '/lesson': (context) => const Lesson(),
               },
               debugShowCheckedModeBanner: false,
             )));

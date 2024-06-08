@@ -310,6 +310,38 @@ class _ProfileAppState extends State<ProfileApp> {
                                       width: 35,
                                       decoration: BoxDecoration(
                                           borderRadius:
+                                          BorderRadius.circular(20),
+                                          color: Colors.deepPurple
+                                              .withOpacity(0.9)),
+                                      child: const Icon(Icons.menu_book,
+                                          color: Colors.white)),
+                                  title: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text('Lesson Plans',
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16)),
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 14,
+                                    color: Colors.black,
+                                  ),
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/lesson',
+                                        arguments: PageRoutingArguments(
+                                            studentId: studentId));
+                                  },
+                                ),
+                              ),
+                              Card(
+                                child: ListTile(
+                                  leading: Container(
+                                      height: 35,
+                                      width: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
                                               BorderRadius.circular(20),
                                           color: Colors.green.withOpacity(0.9)),
                                       child: const Icon(Icons.article,
