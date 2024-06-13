@@ -107,6 +107,7 @@ class _MyApp extends State<MyApp> with WidgetsBindingObserver {
                 '/time_table': (context) => const TimeTablePage(),
                 '/time_table_week': (context) => const WeekdaysScreen(),
                 '/lesson': (context) => const Lesson(),
+                '/lesson_details': (context) => const OtherPage(),
               },
               debugShowCheckedModeBanner: false,
             )));
