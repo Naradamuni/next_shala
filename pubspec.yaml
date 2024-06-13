@@ -58,6 +58,7 @@ dependencies:
   authentication_repository:
     path: packages/authentication_repository
   google_fonts: ^2.1.0
+  firebase_core_platform_interface: 4.5.1
 
 
 dev_dependencies:
